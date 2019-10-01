@@ -26,7 +26,7 @@ public class AccountDAO extends AbstractDAO<AccountInfo> {
 
 	@SuppressWarnings("unchecked")
 	public List<AccountInfo> findAll() {
-		return list((Query<AccountInfo>) namedQuery("com.example.helloworld.core.Person.findAll"));
+		return list((Query<AccountInfo>) namedQuery("com.info.revolut.bank.transfer.services.api.AccountInfo.findAll"));
 	}
 
 }

@@ -17,21 +17,23 @@ import com.codahale.metrics.annotation.Timed;
 import com.info.revolut.bank.transfer.services.api.AccountInfo;
 import com.info.revolut.bank.transfer.services.db.AccountDAO;
 
-@Path("/v1/api/trans/")
+@Path("/v1/api/account/")
 @Produces(MediaType.APPLICATION_JSON)
-public class AccountTransferResource {
+public class AccountInfoResource {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(AccountTransferResource.class);
-	
+	private static final Logger LOGGER = LoggerFactory.getLogger(AccountInfoResource.class);
+
 	AccountDAO accountDAO ;
 
-	public AccountTransferResource() {
+
+	public AccountInfoResource(AccountDAO accountDAO) {
 		super();
+		this.accountDAO = accountDAO;
 	}
 
 	@GET
 	@Timed
-	 @Path("/view_account")
+	@Path("/view_account")
 	public AccountInfo sayHello(@QueryParam("accountId") Optional<String> accountId) {
 
 		return accountDAO.findById(accountId.get()).get();

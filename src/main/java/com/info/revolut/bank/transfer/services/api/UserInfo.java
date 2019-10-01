@@ -1,16 +1,18 @@
 package com.info.revolut.bank.transfer.services.api;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.Objects;
+import java.util.Random;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
@@ -19,37 +21,58 @@ import javax.persistence.Table;
 public class UserInfo {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	@Column(name = "user_id")
+	private int userId ;
 
 	@Column(name = "user_name", nullable = false)
-	String name;
-	@Column(name = "user_account", nullable = false)
-	AccountInfo acctInfo;
+	private String name;
+	
+//	@OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "acctId", referencedColumnName = "acctId")
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	@JoinColumn(name = "acctId", referencedColumnName = "acctId")
+	AccountInfo accountInfo;
 
-	@JsonProperty
+	
+	public UserInfo(int userId, String name, AccountInfo accountInfo) {
+		super();
+		this.userId = userId;
+		this.name = name;
+		this.accountInfo = accountInfo;
+	}
+
+	
+	public int getUserId() {
+		return userId;
+	}
+
+
+	public void setUserId(int userId) {
+		if(userId == 0)
+			userId = generateRandomDigits(8);
+		this.userId = userId;
+	}
+
+
 	public String getName() {
 		return name;
 	}
+
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	@JsonProperty
-	public AccountInfo getAcctInfo() {
-		return acctInfo;
+
+	public AccountInfo getAccountInfo() {
+		return accountInfo;
 	}
 
-	public void setAcctInfo(AccountInfo acctInfo) {
-		this.acctInfo = acctInfo;
+
+	public void setAccountInfo(AccountInfo accountInfo) {
+		this.accountInfo = accountInfo;
 	}
 
-	public UserInfo(String name, AccountInfo acctInfo) {
-		super();
-		this.name = name;
-		this.acctInfo = acctInfo;
-	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -62,12 +85,18 @@ public class UserInfo {
 
 		final UserInfo that = (UserInfo) o;
 
-		return Objects.equals(this.name, that.name) && Objects.equals(this.acctInfo.acctId, that.acctInfo.acctId);
+		return Objects.equals(this.name, that.name) && Objects.equals(this.accountInfo.acctId, that.accountInfo.acctId);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name, acctInfo.acctId);
+		return Objects.hash(name, accountInfo.acctId);
+	}
+	
+	
+	public static int generateRandomDigits(int n) {
+	    int m = (int) Math.pow(10, n - 1);
+	    return m + new Random().nextInt(9 * m);
 	}
 
 }
