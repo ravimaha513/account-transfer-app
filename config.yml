@@ -1,11 +1,25 @@
-# Database settings.
+swagger:
+  resourcePackage: com.info.revolut.bank.transfer.services.resources, com.info.revolut.bank.transfer.services.account
+  
+  
+server:
+  applicationConnectors:
+  - type: http
+    port: 9088
+  adminConnectors:
+  - type: http
+    port: 9081
 database:
   driverClass: org.h2.Driver
   user: sa
   password: sa
-  url: jdbc:h2:./target/transactions
-
+  url: jdbc:h2:./target/example
+  properties:
+    hibernate.hbm2ddl.auto: update
 logging:
   level: INFO
   loggers:
-    io.dropwizard.archetypes: DEBUG
+    com.info.revolut.bank.transfer.services: INFO
+    org.hibernate.SQL:
+      level: INFO
+     
