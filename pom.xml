@@ -18,7 +18,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<dropwizard.version>1.3.14</dropwizard.version>
-		<groovy.version>2.4.17</groovy.version>
+		<groovy.version>2.4.21</groovy.version>
 		<spock.version>1.0-groovy-2.4</spock.version>
 		<mainClass>com.info.revolut.bank.transfer.services.AccountTransferApplication</mainClass>
 	</properties>
